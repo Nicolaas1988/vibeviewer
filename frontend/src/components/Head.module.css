@@ -1,0 +1,13 @@
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1600px;
+  padding: 20px 20px 0px 20px;
+  margin: 20px 20px 0px 20px;
+}
+
+.logo {
+  max-width: 100px;
+  height: 100%;
+}
