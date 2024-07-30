@@ -21,3 +21,12 @@ export const saveOrUpdateEntry = async (entry) => {
     throw error;
   }
 };
+
+export const deleteAllEntries = async () => {
+  try {
+    await axios.delete(`${BACKEND}/api/moods`); // Ensure this matches backend route
+  } catch (error) {
+    console.error('Error deleting entries:', error);
+    throw error;
+  }
+};
