@@ -1,11 +1,11 @@
-// // Main.jsx
+
 // import React, { useState, useEffect } from 'react';
 // import styles from './Main.module.css';
 // import MoodSlider from './MoodSlider';
 // import Head from './Head';
 // import GlobalMood from './GlobalMood';
 // import SelectName from './SelectName';
-// import { fetchEntries, saveOrUpdateEntry } from '../api';
+// import { fetchEntries, saveOrUpdateEntry, deleteAllEntries } from '../api';
 // import Expressions from './Expressions';
 // import ExpressionFeed from './ExpressionFeed';
 
@@ -99,6 +99,18 @@
 //     }
 //   };
 
+//   const handleDeleteAllEntries = async () => {
+//     try {
+//       await deleteAllEntries();
+//       setEntries([]);
+//       setAverageMoods({});
+//       setMoodCounts({});
+//       setTotalUsers(0);
+//     } catch (error) {
+//       console.error('Error deleting entries:', error);
+//     }
+//   };
+
 //   return (
 //     <div className={styles.body}>
 //       <Head />
@@ -121,11 +133,13 @@
 //             <Expressions moods={moods} onExpressionChange={setExpression} /> 
 //           )}
 //           <button onClick={handleUpdateVibe}>Update Vibe</button>
+          
 //         </div>
 //         <div className={styles.companyContainer}>
 //           <h2 className={styles.h1}>Today's vibe</h2>
 //           <GlobalMood moods={moods} averages={averageMoods} moodCounts={moodCounts} />
 //           <ExpressionFeed entries={entries} />
+//           <button onClick={handleDeleteAllEntries}>Reset All</button>
 //         </div>
 //       </div>
      
@@ -134,7 +148,6 @@
 // }
 
 // export default Main;
-
 
 import React, { useState, useEffect } from 'react';
 import styles from './Main.module.css';
@@ -145,6 +158,7 @@ import SelectName from './SelectName';
 import { fetchEntries, saveOrUpdateEntry, deleteAllEntries } from '../api';
 import Expressions from './Expressions';
 import ExpressionFeed from './ExpressionFeed';
+import TestOutput from './TestOutput';
 
 function Main() {
   const [moods, setMoods] = useState([
@@ -159,7 +173,7 @@ function Main() {
   const [averageMoods, setAverageMoods] = useState({});
   const [moodCounts, setMoodCounts] = useState({});
   const [totalUsers, setTotalUsers] = useState(0);
-  const [expression, setExpression] = useState(''); 
+  const [expression, setExpression] = useState('');
 
   useEffect(() => {
     async function loadEntries() {
@@ -168,7 +182,7 @@ function Main() {
         console.log('Fetched entries:', data);
         setEntries(data);
         calculateAverages(data);
-        setTotalUsers(data.length); 
+        setTotalUsers(data.length);
       } catch (error) {
         console.error('Error fetching entries:', error);
       }
@@ -220,7 +234,7 @@ function Main() {
       return;
     }
 
-    const moodData = { name: selectedName, expression }; 
+    const moodData = { name: selectedName, expression };
     moods.forEach(mood => {
       moodData[mood.id] = mood.value;
     });
@@ -230,7 +244,7 @@ function Main() {
       const data = await fetchEntries();
       setEntries(data);
       calculateAverages(data);
-      setTotalUsers(data.length); 
+      setTotalUsers(data.length);
     } catch (error) {
       console.error('Error updating vibe:', error);
     }
@@ -255,7 +269,7 @@ function Main() {
         <div className={styles.personalContainer}>
           <SelectName selectedName={selectedName} setSelectedName={setSelectedName} />
           <h2 className={styles.h3}>Hey {selectedName || 'Name'}! How are you today?</h2>
-          
+
           {moods.map(mood => (
             <MoodSlider
               key={mood.id}
@@ -267,21 +281,21 @@ function Main() {
             />
           ))}
           {moods.some(mood => mood.value !== 0) && (
-            <Expressions moods={moods} onExpressionChange={setExpression} /> 
+            <Expressions moods={moods} onExpressionChange={setExpression} />
           )}
           <button onClick={handleUpdateVibe}>Update Vibe</button>
-          
         </div>
         <div className={styles.companyContainer}>
           <h2 className={styles.h1}>Today's vibe</h2>
           <GlobalMood moods={moods} averages={averageMoods} moodCounts={moodCounts} />
           <ExpressionFeed entries={entries} />
           <button onClick={handleDeleteAllEntries}>Reset All</button>
+          <TestOutput moodCounts={moodCounts} totalUsers={totalUsers} />
         </div>
       </div>
-     
     </div>
   );
 }
 
 export default Main;
+
