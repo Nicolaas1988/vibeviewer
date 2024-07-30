@@ -270,12 +270,13 @@ function Main() {
             <Expressions moods={moods} onExpressionChange={setExpression} /> 
           )}
           <button onClick={handleUpdateVibe}>Update Vibe</button>
-          <button onClick={handleDeleteAllEntries}>Reset All</button>
+          
         </div>
         <div className={styles.companyContainer}>
           <h2 className={styles.h1}>Today's vibe</h2>
           <GlobalMood moods={moods} averages={averageMoods} moodCounts={moodCounts} />
           <ExpressionFeed entries={entries} />
+          <button onClick={handleDeleteAllEntries}>Reset All</button>
         </div>
       </div>
      
