@@ -53,7 +53,7 @@ router.post('/moods', async (req, res) => {
 });
 
 // Delete all entries
-router.delete('/', async (req, res) => {
+router.delete('/moods', async (req, res) => {
   try {
     await Mood.deleteMany({});
     res.status(200).json({ message: 'All entries deleted' });
