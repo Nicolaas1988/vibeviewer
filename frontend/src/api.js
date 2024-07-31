@@ -5,7 +5,7 @@ const BACKEND = process.env.REACT_APP_BACKEND;
 
 export const fetchEntries = async () => {
   try {
-    const response = await axios.get(`${BACKEND}/api/moods`); // Ensure this matches backend route
+    const response = await axios.get(`api/moods`); // Ensure this matches backend route
     return response.data;
   } catch (error) {
     console.error('Error fetching entries:', error);

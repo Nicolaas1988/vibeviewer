@@ -4,8 +4,7 @@ import styles from './MoodSlider.module.css';
 function MoodSlider({ id, negativeFeeling, positiveFeeling, value, onMoodChange }) {
   const handleChange = (e) => {
     const newValue = e.target.value;
-    console.log('Slider ID:', id); // Debugging
-    console.log('Slider Value:', newValue); // Debugging
+
     if (id && newValue) {
       onMoodChange(id, newValue);
     }
